@@ -1,0 +1,19 @@
+/* Goal: Read potentiometer, convert to voltage, display on serial monitor */
+
+int val = 0; // potentiometer value
+
+void setup() {
+  // initialize serial communication
+  Serial.begin(9600);
+}
+
+void loop() {
+  // read analog input from pin A0
+  val = analogRead(A0); 
+  // map value to 0-500 (for 0-5V)
+  int voltage = map(val, 0, 1023, 0, 500); 
+  // convert to actual voltage
+  float volt = voltage / 100.0; 
+  // print voltage to serial monitor
+  Serial.println(volt);
+}
