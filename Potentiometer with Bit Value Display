@@ -1,0 +1,15 @@
+/* Goal: Read potentiometer values and display on serial monitor */
+
+int val = 0; // potentiometer value
+
+void setup() {
+  // initialize serial communication
+  Serial.begin(9600);
+}
+
+void loop() {
+  // read analog input from pin A0
+  val = analogRead(A0); 
+  // print the value to serial monitor
+  Serial.println(val); 
+}
