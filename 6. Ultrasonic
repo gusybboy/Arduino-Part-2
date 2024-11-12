@@ -1,0 +1,38 @@
+/* Goal: Measure distance using HC-SR04 ultrasonic sensor */
+
+const int trigPin = 10; // Trigger pin of HC-SR04
+const int echoPin = 13; // Echo pin of HC-SR04
+float duration, distance; // Variables for time and distance
+ 
+void setup() {
+  Serial.begin(9600); // Initialize serial communication
+  pinMode(trigPin, OUTPUT); // Set trigPin as output
+  pinMode(echoPin, INPUT); // Set echoPin as input
+}
+ 
+void loop() {
+  // Send a pulse to trigger measurement
+  digitalWrite(trigPin, LOW); // Ensure trigPin is low
+  delayMicroseconds(2); // Short delay
+  digitalWrite(trigPin, HIGH); // Start 10-microsecond pulse
+  delayMicroseconds(10); // Hold pulse
+  digitalWrite(trigPin, LOW); // End pulse
+  
+  // Measure pulse duration from echoPin
+  duration = pulseIn(echoPin, HIGH); 
+  
+  // Calculate distance in cm
+  distance = (duration / 2) * 0.0343;
+  
+  // Display distance or out-of-range message
+  Serial.print("Distance = "); 
+  if (distance >= 400 || distance <= 2) { // Check range limits
+     Serial.println("Out of range");
+  }
+  else {
+    Serial.print(distance); // Print distance in cm
+    Serial.println(" cm"); 
+    delay(500); // Delay before next reading
+  }
+  delay(500); // Extra delay for stability
+}
