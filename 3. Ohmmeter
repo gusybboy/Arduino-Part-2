@@ -1,0 +1,39 @@
+/* 
+  -ReadAnalogResistance
+  -Reads the voltage across a known reference resistor and calculates 
+  the unknown resistance connected in series with it.
+*/ 
+
+// Define the known reference resistor value in ohms
+const float R1 = 1000.0;
+
+void setup() { 
+  // initialize serial communication at 9600 bits per second: 
+  Serial.begin(9600); 
+} 
+
+void loop() { 
+  // read the input on analog pin 0: 
+  int sensorValue = analogRead(A0); 
+
+  // Convert the analog reading (0-1023) to a voltage (0-5V)
+  float voltage = sensorValue * (5.0 / 1023.0);
+
+  // Calculate the unknown resistance
+  float current = ((5.0 - voltage) / R1);
+  float unknownResistance = voltage / current;
+  
+  // print out the values
+  Serial.print("bit value = "); 
+  Serial.print(sensorValue); 
+  Serial.print("\t"); 
+  Serial.print("voltage = "); 
+  Serial.print(voltage);
+  Serial.print("V");
+  Serial.print("\t");  
+  Serial.print("unknown resistance = "); 
+  Serial.print(unknownResistance);
+  Serial.println("ohms");
+
+  delay(500); // slight delay to stabilize readings
+}
