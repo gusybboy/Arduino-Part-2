@@ -1,0 +1,43 @@
+/* Goal: Blink LED every 5 seconds while reading button state */
+
+const int LED = 2; // LED connected to pin 2
+const int PB = 3;  // Button connected to pin 3
+int ledState = LOW;  // Stores current LED state
+unsigned long previousMillis = 0;  // Last LED update time
+const long interval = 5000;  // Blink interval in milliseconds
+
+void setup() {
+  // Set LED pin as output
+  pinMode(LED, OUTPUT);
+  // Set button pin as input
+  pinMode(PB, INPUT_PULLUP);
+  // Start serial communication
+  Serial.begin(9600);
+}
+
+void loop() {
+  // Read button state
+  int buttonState = !digitalRead(PB);
+  // Print button state to Serial Monitor
+  Serial.print("Button State = ");
+  Serial.println(buttonState);
+
+  // Get current time in milliseconds
+  unsigned long currentMillis = millis();
+
+  // Check if blink interval has passed
+  if (currentMillis - previousMillis >= interval) {
+    // Update last LED toggle time
+    previousMillis = currentMillis;
+
+    // Toggle LED state
+    if (ledState == LOW) {
+      ledState = HIGH;
+    } else {
+      ledState = LOW;
+    }
+
+    // Set LED to new state
+    digitalWrite(LED, ledState);
+  }
+}
